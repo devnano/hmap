@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "axios-jsonp-pro": "^1.1.6",
     "geojson": "^0.5.0",
     "goertzeljs": "^4.2.1",
