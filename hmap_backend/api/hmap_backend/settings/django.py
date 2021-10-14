@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "hmap_backend.apps.common",
     "hmap_backend.apps.accounts",
     "app",
+    "guardian",
 ] + env.list("HMAP_BACKEND_DEV_INSTALLED_APPS", default=[])
 
 MIDDLEWARE = [
@@ -129,3 +130,8 @@ USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 APPEND_SLASH = False
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",  # this is default
+    "guardian.backends.ObjectPermissionBackend",
+)

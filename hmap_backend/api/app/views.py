@@ -5,8 +5,8 @@ from rest_framework import permissions, viewsets
 import requests
 
 from app.goes.goes import getFireFromGoes
-from app.models import Layer
 from app.serializers import LayerSerializer
+from guardian.shortcuts import get_objects_for_user
 
 
 def getFirmsModis(request):
@@ -29,6 +29,7 @@ def getGoes(request):
 class LayerViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = LayerSerializer
-    # TODO: Filter by user groups
-    queryset = Layer.objects.all()
     pagination_class = None
+
+    def get_queryset(self):
+        return get_objects_for_user(self.request.user, "app.view_layer")

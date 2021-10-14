@@ -1,12 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
-from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy
 
 from hmap_backend.apps.accounts.models import UserAccount
 
 
-admin.site.unregister(Group)
+# admin.site.unregister(Group)
 
 
 @admin.register(UserAccount)
@@ -24,4 +23,4 @@ class UserAdmin(DjangoUserAdmin):
     list_display = ("email", "first_name", "last_name", "is_staff", "is_active")
     search_fields = ("first_name", "last_name", "email")
     ordering = ("email",)
-    readonly_fields = ("email",)
+    # readonly_fields = ("email",)
