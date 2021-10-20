@@ -14,3 +14,4 @@ django-cors-headers==3.8.0
 boto3==1.18.42
 netcdf4==1.5.7
 geojson==2.5.0
+drf-flex-fields==0.9.5

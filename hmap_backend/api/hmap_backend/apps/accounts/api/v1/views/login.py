@@ -1,4 +1,5 @@
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
+
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -9,7 +10,6 @@ from drf_yasg.utils import swagger_auto_schema
 from hmap_backend.apps.accounts.api.permissions import IsNotAuthenticated
 from hmap_backend.apps.accounts.api.v1.serializers.login import LoginSerializer
 from hmap_backend.apps.accounts.services.login import LoginService
-
 
 
 class LoginView(GenericAPIView):

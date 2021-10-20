@@ -1,11 +1,12 @@
 from django.http import HttpResponse, JsonResponse
 
+from rest_framework import permissions, viewsets
+
 import requests
 
 from app.goes.goes import getFireFromGoes
-
-
-# Create your views here.
+from app.models import Layer
+from app.serializers import LayerSerializer
 
 
 def getFirmsModis(request):
@@ -23,3 +24,11 @@ def getFirmsViirs(request):
 def getGoes(request):
     r = getFireFromGoes()
     return JsonResponse(r)
+
+
+class LayerViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = LayerSerializer
+    # TODO: Filter by user groups
+    queryset = Layer.objects.all()
+    pagination_class = None

@@ -2,7 +2,9 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
 
+from app.urls import app_router
 from app.views import getFirmsModis, getFirmsViirs, getGoes
+
 
 PLATFORM_PREFIX = "_platform"
 API_PREFIX = "api"
@@ -17,6 +19,7 @@ api_v1_urlpatterns = [
         f"{API_PREFIX}/v1/accounts/",
         include(("hmap_backend.apps.accounts.api.v1.urls", "accounts"), namespace="api-v1-accounts"),
     ),
+    path(f"{API_PREFIX}/v1/", include(app_router.urls)),
     path(f"{API_PREFIX}/v1/firms/modis/", getFirmsModis),
     path(f"{API_PREFIX}/v1/firms/viirs/", getFirmsViirs),
     path(f"{API_PREFIX}/v1/goes/", getGoes),
