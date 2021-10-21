@@ -5,6 +5,7 @@ from rest_framework import permissions, viewsets
 import requests
 
 from app.goes.goes import getFireFromGoes
+from app.models import Layer
 from app.serializers import LayerSerializer
 from guardian.shortcuts import get_objects_for_user
 
@@ -32,4 +33,4 @@ class LayerViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = None
 
     def get_queryset(self):
-        return get_objects_for_user(self.request.user, "app.view_layer")
+        return get_objects_for_user(self.request.user, "app.view_layer") | Layer.objects.filter(is_public=True)

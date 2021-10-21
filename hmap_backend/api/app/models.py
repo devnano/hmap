@@ -29,4 +29,4 @@ class Layer(models.Model):
 
     def save(self, *args, **kwargs):
         self.save_geojson_data_from_source_file()
-        super().save(self, *args, **kwargs)
+        super().save(*args, **kwargs)
