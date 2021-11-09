@@ -12,6 +12,7 @@ import GOESLayer from "../../components/GOESLayer/GOESLayer";
 import CoordinatePointLayer from "../../components/CoordinatePointLayer/CoordinatePointLayer";
 import LoginForm from "../../components/LoginForm";
 import LoadingIndicator from "../../components/LoadingIndicator";
+import LayersMenu from "../../components/LayersMenu";
 import {
   MAP_DEFAULT_CENTER,
   MAPBOX_ACCESS_TOKEN,
@@ -258,6 +259,7 @@ const Cockpit = (props) => {
           />
           
         </div>
+        <LayersMenu/>
         {error && <Snackbar open={error} autoHideDuration={6000} onClose={() => setError(null)}>
           <Alert onClose={() => setError(null)} severity="error" sx={{ width: '100%' }}>
           {error}
