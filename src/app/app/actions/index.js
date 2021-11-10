@@ -33,3 +33,8 @@ export const GetUserLayersAction = {
   type: "GET_USER_LAYERS_EVENT",
   payload: {}
 };
+
+export const ToggleLayerTypeVisibility = {
+  type: "TOGGLE_LAYER_TYPE_VISIBILITY",
+  payload: {}
+};
