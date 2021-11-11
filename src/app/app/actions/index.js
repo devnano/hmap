@@ -34,7 +34,7 @@ export const GetUserLayersAction = {
   payload: {}
 };
 
-export const ToggleLayerTypeVisibility = {
+export const ToggleLayerTypeVisibility = (layerType) => ({
   type: "TOGGLE_LAYER_TYPE_VISIBILITY",
-  payload: {}
-};
+  payload: {layerType}
+});

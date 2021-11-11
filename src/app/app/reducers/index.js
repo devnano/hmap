@@ -1,4 +1,9 @@
-export default (state, action) => {
+import LayerType from '../../models/layerType';
+const INITIAL_STATE = {
+  VisibleLayerTypes: LayerType.all()
+};
+
+export default (state=INITIAL_STATE, action) => {
   
   switch (action.type) {
     case "GET_LATEST_MODIS_24_SUCCESS":
@@ -39,6 +44,14 @@ export default (state, action) => {
         ...state,
         UserLayersData: action.payload
       };
+    case "TOGGLE_LAYER_TYPE_VISIBILITY":
+      const {layerType} = action.payload;
+      const visibleLayers = new Set(state.VisibleLayerTypes);
+      visibleLayers.has(layerType) ? visibleLayers.delete(layerType) : visibleLayers.add(layerType);
+      return {
+        ...state,
+        VisibleLayerTypes: visibleLayers
+      }
     default:
     return state;
   }

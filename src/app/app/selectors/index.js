@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { CSVToGeoJSON } from '../utils';
 import LayerType from '../../models/layerType';
 
-const DEFAULT_VISIBLE_LAYERS = new Set([LayerType.PUBLIC, LayerType.PRIVATE, LayerType.ACTIVE_FIRES, LayerType.BIG_FIRES]);
+const DEFAULT_VISIBLE_LAYERS = LayerType.all();
 
 const getFIRMSLatestModis24 = state => state ? state.FIRMSLatestModis24Data : {};
 const getFIRMSLatestViirs24 = state => state ? state.FIRMSLatestViirs24Data : {};
@@ -44,6 +44,6 @@ export const getUserLayersData = createSelector(
 
 export const getVisibleLayerTypesData = createSelector(
     [getVisibleLayerTypes],
-    result => result || DEFAULT_VISIBLE_LAYERS
+    result => result || new Set()
 )
 

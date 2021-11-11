@@ -10,17 +10,24 @@ import LayerType from '../../models/layerType';
 import {
     getVisibleLayerTypesData
   } from "../../app/selectors";
+import {
+ToggleLayerTypeVisibility
+} from "../../app/actions";
 
-function LayersMenu({VisibleLayerTypesData}) {
+
+
+function LayersMenu(props) {
+    const {VisibleLayerTypesData, ToggleLayerTypeVisibilityAction} = props;
+    const createLayerTypeSwitch = (layerType, label) => <FormControlLabel control={<Switch checked={VisibleLayerTypesData.has(layerType)} onChange={() => ToggleLayerTypeVisibilityAction(layerType)} />} label={label} />
     return (
         <Card sx={{ minWidth: 275 }} style={{position:'absolute', top: '0%',
         left: '0%'}}>
             <CardContent>
                 <FormGroup>
-                    <FormControlLabel control={<Switch checked={VisibleLayerTypesData.has(LayerType.PUBLIC)} />} label="Public Layers" />
-                    <FormControlLabel control={<Switch checked={VisibleLayerTypesData.has(LayerType.PRIVATE)} />} label="Private Layers" />
-                    <FormControlLabel control={<Switch checked={VisibleLayerTypesData.has(LayerType.ACTIVE_FIRES)} />} label="Active Fires" />
-                    <FormControlLabel control={<Switch checked={VisibleLayerTypesData.has(LayerType.BIG_FIRES)} />} label="Big Fires – Historical Data" />
+                    {createLayerTypeSwitch(LayerType.PUBLIC, "Public Layers")}
+                    {createLayerTypeSwitch(LayerType.PRIVATE, "Public Layers")}
+                    {createLayerTypeSwitch(LayerType.ACTIVE_FIRES, "Active Fires")}
+                    {createLayerTypeSwitch(LayerType.BIG_FIRES, "Big Fires – Historical Data")}
                 </FormGroup>
             </CardContent>
         </Card>
@@ -32,7 +39,13 @@ const mapStateToProps = (state) => ({
     VisibleLayerTypesData: getVisibleLayerTypesData(state)
 });
 
+const mapDispatchToProps = (dispatch) => ({
+    ToggleLayerTypeVisibilityAction: (layerType) => dispatch(ToggleLayerTypeVisibility(layerType)),
+    
+  });
+
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
   )(LayersMenu);
   
