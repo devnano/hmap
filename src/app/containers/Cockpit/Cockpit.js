@@ -257,8 +257,11 @@ const Cockpit = (props) => {
               </IconButton>
             </Box>
           </Grid>
-          <Grid spacing={3} xs={10} sm={12} sx={{ alignItems:"center"}} item container >
-            <Grid item xs={0} sm={6} md={8}/>
+          <Grid spacing={3} xs={10} sm={12} sx={{ alignItems: "center", textAlign:"right"}}  item container >
+            <Grid item xs={0} sm={6} md={8} display={{ xs: "none", sm: "block"}}/>
+            <Grid item xs={12} sm={3} md={2}>
+            {!props.GetMeData.email ? <Button onClick={() => setLoginPopup(!loginPopup)} variant="contained">Login</Button> : <Button onClick={props.LogOutAction} variant="contained">Logout</Button>}
+            </Grid>
             <Grid item xs={12} sm={3} md={2}>
               <CoordinateInput
                 value={coordinateInputValue}
@@ -266,9 +269,7 @@ const Cockpit = (props) => {
                 onSubmit={(event) => coordinateSubmitHandler(event, true)}
               />
             </Grid>
-            <Grid item xs={12} sm={3} md={2}>
-            {!props.GetMeData.email ? <Button onClick={() => setLoginPopup(!loginPopup)} variant="contained">Login</Button> : <Button onClick={props.LogOutAction} variant="contained">Logout</Button>}
-            </Grid>
+
           </Grid>
 
           {/* <Grid item xs={4}>
