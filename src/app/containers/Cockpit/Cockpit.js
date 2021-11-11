@@ -70,6 +70,7 @@ const Cockpit = (props) => {
   const [loading, setLoading] = useState(false);
   const [map, setMap] = useState(null);
   const [error, setError] = useState(null);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
   const mapRef = React.createRef();
 
   const switchFIRMSLayer = () => {
@@ -251,7 +252,7 @@ const Cockpit = (props) => {
         <Grid sx={{position:"absolute", top: "0%", left: "0%", marginTop:"25px", alignItems:"top"}} container>
           <Grid item xs={0} sm={0}>
             <Box display={{ sm: "none" }}>
-              <IconButton  size="large" color="primary" aria-label="menu" component="span">
+              <IconButton onClick={() => setIsMenuVisible(!isMenuVisible)}  size="large" color="primary" aria-label="menu" component="span">
                 <MenuIcon fontSize="inherit"/>
               </IconButton>
             </Box>
@@ -278,7 +279,9 @@ const Cockpit = (props) => {
           </Grid> */}
         </Grid>
 
-        <LayersMenu/>
+        <Box display={{ xs: isMenuVisible ? "block" : "none", sm:"block" }}>
+          <LayersMenu/>
+        </Box>
         {error && <Snackbar open={error} autoHideDuration={6000} onClose={() => setError(null)}>
           <Alert onClose={() => setError(null)} severity="error" sx={{ width: '100%' }}>
           {error}
