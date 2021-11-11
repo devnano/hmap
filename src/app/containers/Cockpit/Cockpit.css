@@ -1,9 +1,11 @@
+
 .top-bar {
     display: flex;
-    right: 64px;
+    width: 100%;
     top: 25px;
     gap: 50px;
     flex-direction: row-reverse;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
+    align-items: center;
     position: absolute; 
 }

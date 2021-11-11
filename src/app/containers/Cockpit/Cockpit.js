@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import IconButtonSwitch from "../../components/IconButtonSwitch/IconButtonSwitch";
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import baseLayers, { DEFAULT_HIDDEN_LAYERS } from "../../../config/layers";
 import { connect } from "react-redux";
 import ReactMapboxGl, { Popup } from "react-mapbox-gl";
@@ -42,6 +45,7 @@ import queryString from "query-string";
 import './Cockpit.css';
 import getServerErrorMessage from "../../lib/getServerErrorMessage";
 import filterLayers from "../../lib/filterLayers";
+import MenuIcon from '@mui/icons-material/Layers';
 
 
 const MainMap = ReactMapboxGl({
@@ -244,23 +248,36 @@ const Cockpit = (props) => {
 
 
         </MainMap>
-        <div className="top-bar">
-          {!props.GetMeData.email ? <Button onClick={() => setLoginPopup(!loginPopup)} variant="contained">Login</Button> : <Button onClick={props.LogOutAction} variant="contained">Logout</Button>}
-          <IconButtonSwitch
-            loading={!firmsDataWasLoaded}
-            right={64}
-            backgroundImage="fire-emoji.png"
-            value={showFIRMS}
-            onClick={fireClickHandler}
-          />
-        
-          <CoordinateInput
-            value={coordinateInputValue}
-            onChange={coordinateChangeHandler}
-            onSubmit={(event) => coordinateSubmitHandler(event, true)}
-          />
-          
-        </div>
+        <Grid sx={{position:"absolute", top: "0%", left: "0%", marginTop:"25px", alignItems:"top"}} container>
+          <Grid item xs={0} sm={0}>
+            <Box display={{ sm: "none" }}>
+              <IconButton  size="large" color="primary" aria-label="menu" component="span">
+                <MenuIcon fontSize="inherit"/>
+              </IconButton>
+            </Box>
+          </Grid>
+          <Grid spacing={3} xs={10} sm={12} sx={{ alignItems:"center"}} item container >
+            <Grid item xs={0} sm={6} md={8}/>
+            <Grid item xs={12} sm={3} md={2}>
+              <CoordinateInput
+                value={coordinateInputValue}
+                onChange={coordinateChangeHandler}
+                onSubmit={(event) => coordinateSubmitHandler(event, true)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3} md={2}>
+            {!props.GetMeData.email ? <Button onClick={() => setLoginPopup(!loginPopup)} variant="contained">Login</Button> : <Button onClick={props.LogOutAction} variant="contained">Logout</Button>}
+            </Grid>
+          </Grid>
+
+          {/* <Grid item xs={4}>
+            xs=4
+          </Grid>
+          <Grid item xs={8}>
+            xs=8
+          </Grid> */}
+        </Grid>
+
         <LayersMenu/>
         {error && <Snackbar open={error} autoHideDuration={6000} onClose={() => setError(null)}>
           <Alert onClose={() => setError(null)} severity="error" sx={{ width: '100%' }}>
