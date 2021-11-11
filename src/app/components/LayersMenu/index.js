@@ -20,8 +20,7 @@ function LayersMenu(props) {
     const {VisibleLayerTypesData, ToggleLayerTypeVisibilityAction} = props;
     const createLayerTypeSwitch = (layerType, label) => <FormControlLabel control={<Switch checked={VisibleLayerTypesData.has(layerType)} onChange={() => ToggleLayerTypeVisibilityAction(layerType)} />} label={label} />
     return (
-        <Card sx={{ minWidth: 275 }} style={{position:'absolute', top: '0%',
-        left: '0%'}}>
+        <Card sx={{ minWidth:275, position: "absolute", top: {xs:"50%", sm:"10%"}, left: {xs:"50%", sm:"5%"}, transform:{xs:'translate(-50%, -50%)', sm: 'translate(0%, 0%)'} }} >
             <CardContent>
                 <FormGroup>
                     {createLayerTypeSwitch(LayerType.PUBLIC, "Public Layers")}

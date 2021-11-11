@@ -33,11 +33,7 @@ export default (state=INITIAL_STATE, action) => {
         };
     case "SUBMIT_LOGOUT_SUCCESS":
         if(action.payload.isLoggedIn === false) {
-          return {
-            ...state,
-            GetMeData: null,
-            UserAuthData: null,
-          };
+          return INITIAL_STATE;
         }
     case "SUBMIT_GET_USER_LAYERS_SUCCESS":
       return {
