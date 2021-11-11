@@ -33,13 +33,15 @@ import {
   getLatestGoesGeoJSON,
   getUserAuthData,
   getMeData,
-  getUserLayersData
+  getUserLayersData,
+  getVisibleLayerTypesData
 } from "../../app/selectors";
 import CoordinateInput from "../../components/CoordinateInput/CoordinateInput";
 import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import './Cockpit.css';
 import getServerErrorMessage from "../../lib/getServerErrorMessage";
+import filterLayers from "../../lib/filterLayers";
 
 
 const MainMap = ReactMapboxGl({
@@ -184,8 +186,8 @@ const Cockpit = (props) => {
     if(props.UserLayersData.error) {
       return;
     }
-    setUserLayers(props.UserLayersData.map(layerData => ({...layerData, ...layerData.styles, id: JSON.stringify(layerData.id), data: layerData.geojson_data,   })));
-  }, [props.UserLayersData]);
+    setUserLayers(filterLayers(props.UserLayersData, props.VisibleLayerTypesData).map(layerData => ({...layerData, ...layerData.styles, id: JSON.stringify(layerData.id), data: layerData.geojson_data,   })));
+  }, [props.UserLayersData, props.VisibleLayerTypesData]);
 
   const FIRMSModisLayer = props.FIRMSLatestModis24
   ? FIRMSLayer("firms-modis", props.FIRMSLatestModis24)
@@ -283,6 +285,7 @@ const mapStateToProps = (state) => ({
   UserAuthData: getUserAuthData(state),
   GetMeData: getMeData(state),
   UserLayersData: getUserLayersData(state),
+  VisibleLayerTypesData: getVisibleLayerTypesData(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

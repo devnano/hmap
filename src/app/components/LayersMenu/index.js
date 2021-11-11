@@ -25,7 +25,7 @@ function LayersMenu(props) {
             <CardContent>
                 <FormGroup>
                     {createLayerTypeSwitch(LayerType.PUBLIC, "Public Layers")}
-                    {createLayerTypeSwitch(LayerType.PRIVATE, "Public Layers")}
+                    {createLayerTypeSwitch(LayerType.PRIVATE, "Private Layers")}
                     {createLayerTypeSwitch(LayerType.ACTIVE_FIRES, "Active Fires")}
                     {createLayerTypeSwitch(LayerType.BIG_FIRES, "Big Fires – Historical Data")}
                 </FormGroup>
