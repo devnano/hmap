@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from "react-redux";
-import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 // import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -26,11 +27,20 @@ function Menu(props) {
 
     return (
         <Card sx={{ minWidth:275, position: "absolute", top: {xs:"50%", sm:"10%"}, left: {xs:"50%", sm:"5%"}, transform:{xs:'translate(-50%, -50%)', sm: 'translate(0%, 0%)'} }} >
+                      <Toolbar style={{ background: '#1A76D2' }} variant="dense">
+          {/* <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <MenuIcon />
+          </IconButton> */}
+          <Typography variant="h6" color="inherit" component="div" color="common.white">
+            Humanitarian Map
+          </Typography>
+        </Toolbar>
             <CardContent>
+  
                 <FormGroup>
                     {createLayerTypeSwitch(LayerType.PUBLIC, "Public Layers")}
                     {createLayerTypeSwitch(LayerType.PRIVATE, "Private Layers")}
-                    {createLayerTypeSwitch(LayerType.ACTIVE_FIRES, "Active Fires")}
+                    {createLayerTypeSwitch(LayerType.ACTIVE_FIRES, "Fire Points")}
                     {createLayerTypeSwitch(LayerType.BIG_FIRES, "Big Fires – Historical Data")}
                 </FormGroup>
             </CardContent>

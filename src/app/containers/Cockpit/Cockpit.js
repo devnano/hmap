@@ -188,11 +188,11 @@ const Cockpit = (props) => {
 
 
         </MainMap>
-        <Grid sx={{position:"absolute", top: "0%", left: "0%", marginTop:"25px", alignItems:"top"}} container>
+        <Grid sx={{position:"absolute", top: "0%", left: "0%", marginTop:"25px",paddingLeft:"25px",paddingRight:"25px", alignItems:"top"}} container>
           <Grid item xs={0} sm={0}>
-            <Box display={{ sm: "none" }}>
-              <IconButton onClick={() => setIsMenuVisible(!isMenuVisible)}  size="large" color="primary" aria-label="menu" component="span">
-                <MenuIcon fontSize="inherit"/>
+            <Box sx={{background:"#1A76D2", borderRadius:"40px"}} display={{ sm: "none" }}>
+              <IconButton onClick={() => setIsMenuVisible(!isMenuVisible)}  color="primary" aria-label="menu" component="span">
+                <MenuIcon fontSize="inherit" style={{fill: "white"}}/>
               </IconButton>
             </Box>
           </Grid>
