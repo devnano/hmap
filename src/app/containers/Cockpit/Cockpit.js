@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
-import IconButtonSwitch from "../../components/IconButtonSwitch/IconButtonSwitch";
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import baseLayers, { DEFAULT_HIDDEN_LAYERS } from "../../../config/layers";
 import { connect } from "react-redux";
 import ReactMapboxGl, { Popup } from "react-mapbox-gl";
 import MapLayers from "../../components/Map/MapLayers/MapLayers";
-import FIRMSLayer from "../../components/FIRMSLayer/FIRMSLayer";
-import GOESLayer from "../../components/GOESLayer/GOESLayer";
 import CoordinatePointLayer from "../../components/CoordinatePointLayer/CoordinatePointLayer";
 import LoginForm from "../../components/LoginForm";
 import LoadingIndicator from "../../components/LoadingIndicator";
@@ -22,18 +18,12 @@ import {
   MAPBOX_DEFAULT_STYLE,
 } from "../../../config/config";
 import {
-  FIRMSLatestModis24Action,
-  FIRMSLatestViirs24Action,
-  GoesLatestAction,
   SubmitUserAuthAction,
   GetMeAction,
   LogOutAction,
   GetUserLayersAction,
 } from "../../app/actions";
 import {
-  getFIRMSLatestModis24GeoJSON,
-  getFIRMSLatestViirs24GeoJSON,
-  getLatestGoesGeoJSON,
   getUserAuthData,
   getMeData,
   getUserLayersData,
@@ -53,12 +43,8 @@ const MainMap = ReactMapboxGl({
 });
 
 const Cockpit = (props) => {
-  // const [showFireHistory, setShowFireHistory] = useState(false);
-  const [showFIRMS, setShowFIRMS] = useState(false);
-  const [firmsDataWasLoaded, setFirmsDataWasLoaded] = useState(false);
   const [center] = useState(MAP_DEFAULT_CENTER);
-  // const [isListening, setIsListening] = useState(false);
-  const [hiddenLayers, setHiddenLayers] = useState(DEFAULT_HIDDEN_LAYERS);
+  const [hiddenLayers, setHiddenLayers] = useState([]);
   const [layers, setLayers] = useState([]);
   const [userLayers, setUserLayers] = useState([]);
   const [coordinateInputValue, setCoordinateInputValue] = useState("");
@@ -73,34 +59,8 @@ const Cockpit = (props) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const mapRef = React.createRef();
 
-  const switchFIRMSLayer = () => {
-    if (showFIRMS) {
-      console.log("HERE 1")
-      setHiddenLayers(oldLayers => [
-        ...oldLayers,
-        "firms-modis",
-        "firms-viirs",
-        "goes",
-      ]);
-      setShowFIRMS(false);
-    } else {
-      console.log("HERE 2")
-      if (!firmsDataWasLoaded) {
-        console.log("HERE 3")
-        props.FIRMSLatestModis24Action();
-        props.FIRMSLatestViirs24Action();
-        props.GoesLatestAction();
-        console.log("HERE 4")
-        setFirmsDataWasLoaded(true);
-      }
-      const allHiddenLayers = [...hiddenLayers];
-      allHiddenLayers.splice(hiddenLayers.indexOf("firms-modis"), 1);
-      allHiddenLayers.splice(hiddenLayers.indexOf("firms-viirs"), 1);
-      allHiddenLayers.splice(hiddenLayers.indexOf("goes"), 1);
-      setShowFIRMS(true);
-      setHiddenLayers(allHiddenLayers);
-    }
-  }
+  const allLayers = [...layers,...userLayers];
+
 
   const escFunction = (event) => {
     if(event.keyCode === 27) {
@@ -108,9 +68,6 @@ const Cockpit = (props) => {
     }
   }
 
-  const fireClickHandler = () => {
-    switchFIRMSLayer();
-  };
 
   const mapClickHandler = (clickEvent, mapEvent) => {
     setPopup({ 
@@ -153,7 +110,6 @@ const Cockpit = (props) => {
   };
 
   useEffect(() => {
-    fireClickHandler();
     document.addEventListener("keydown", escFunction, false);
     props.GetMeAction();
     props.GetUserLayersAction();
@@ -194,23 +150,6 @@ const Cockpit = (props) => {
     setUserLayers(filterLayers(props.UserLayersData, props.VisibleLayerTypesData).map(layerData => ({...layerData, ...layerData.styles, id: JSON.stringify(layerData.id), data: layerData.geojson_data,   })));
   }, [props.UserLayersData, props.VisibleLayerTypesData]);
 
-  const FIRMSModisLayer = props.FIRMSLatestModis24
-  ? FIRMSLayer("firms-modis", props.FIRMSLatestModis24)
-  : [];
-  const FIRMSViirsLayer = props.FIRMSLatestViirs24
-    ? FIRMSLayer("firms-viirs", props.FIRMSLatestViirs24)
-    : [];
-  const GoesLayer = props.GoesLatest
-    ? GOESLayer("goes", props.GoesLatest)
-    : [];
-  const allLayers = [
-    ...baseLayers,
-    ...layers,
-    ...FIRMSModisLayer,
-    ...FIRMSViirsLayer,
-    ...GoesLayer,
-    ...userLayers,
-  ];
   
   return (
       <div>
@@ -300,9 +239,6 @@ const Cockpit = (props) => {
 
 
 const mapStateToProps = (state) => ({
-  FIRMSLatestModis24: getFIRMSLatestModis24GeoJSON(state),
-  FIRMSLatestViirs24: getFIRMSLatestViirs24GeoJSON(state),
-  GoesLatest: getLatestGoesGeoJSON(state),
   UserAuthData: getUserAuthData(state),
   GetMeData: getMeData(state),
   UserLayersData: getUserLayersData(state),
@@ -310,9 +246,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  FIRMSLatestModis24Action: () => dispatch(FIRMSLatestModis24Action),
-  FIRMSLatestViirs24Action: () => dispatch(FIRMSLatestViirs24Action),
-  GoesLatestAction: () => dispatch(GoesLatestAction),
   SubmitUserAuthAction: (email, password) => dispatch(SubmitUserAuthAction(email, password)),
   GetMeAction: () => dispatch(GetMeAction),
   LogOutAction: () => dispatch(LogOutAction),
