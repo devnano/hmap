@@ -13,7 +13,7 @@ class Command(BaseCommand):
         for service_name in CONFIGURED_SERVICES:
             task_name = f"{APP_NAME}.tasks.update_{service_name}"
             hours_count = int(settings.UPDATE_INTERVALS.get(service_name, settings.DEFAULT_UPDATE_INTERVAL))
-            schedule, _ = IntervalSchedule.objects.get_or_create(every=hours_count, period=IntervalSchedule.HOURS)
+            schedule, _ = IntervalSchedule.objects.get_or_create(every=hours_count, period=IntervalSchedule.MINUTES)
             PeriodicTask.objects.update_or_create(
                 defaults={
                     "interval": schedule,

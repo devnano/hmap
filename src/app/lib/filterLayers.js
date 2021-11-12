@@ -3,7 +3,7 @@ import LayerType from '../models/layerType';
 const layerTypeFilter = {
     [LayerType.PUBLIC]:(layer) => layer.is_public,
     [LayerType.PRIVATE]:(layer) => !layer.is_public,
-    [LayerType.ACTIVE_FIRES]:(layer) => layer.name === "activefires",
+    [LayerType.ACTIVE_FIRES]:(layer) => ["Firms Viirs", "Firms Modis"].includes(layer.name),
     [LayerType.BIG_FIRES]:(layer) => layer.name === "bigfires",
 };
 
