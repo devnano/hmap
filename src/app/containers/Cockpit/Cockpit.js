@@ -220,7 +220,7 @@ const Cockpit = (props) => {
         </Grid>
 
         <Box display={{ xs: isMenuVisible ? "block" : "none", sm:"block" }}>
-          <LayersMenu/>
+          <LayersMenu isMenuVisible={isMenuVisible} setIsMenuVisible={setIsMenuVisible}/>
         </Box>
         {error && <Snackbar open={error} autoHideDuration={6000} onClose={() => setError(null)}>
           <Alert onClose={() => setError(null)} severity="error" sx={{ width: '100%' }}>
