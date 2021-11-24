@@ -49,3 +49,8 @@ class Layer(models.Model):
     def save(self, *args, **kwargs):
         self.save_geojson_data_from_source_file()
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        self.geojson_data.delete(save=False)
+        self.source_file.delete(save=False)
+        super().delete(*args, **kwargs)
